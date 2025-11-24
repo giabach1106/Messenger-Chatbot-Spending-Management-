@@ -1,0 +1,3 @@
+{$DOMAIN_NAME} {
+    reverse_proxy backend:8000
+}
