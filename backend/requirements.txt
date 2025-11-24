@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+motor
+beanie
+openai
+celery
+redis
+requests
+python-dotenv
+matplotlib
+pandas
+pydantic
+pydantic-settings
