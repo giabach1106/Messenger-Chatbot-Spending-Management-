@@ -182,7 +182,7 @@ async def send_weekly_report(psid):
         cat_data[t.category] = cat_data.get(t.category, 0) + t.amount
 
     # Send text report
-     msg = f" Monthly Report ({today.strftime('%B')}):\nTotal: ${total:.2f}\n"
+    msg = f" Monthly Report ({today.strftime('%B')}):\nTotal: ${total:.2f}\n"
     for k, v in cat_data.items():
         msg += f"- {k}: ${v:.2f}\n"
     send_message(psid, msg)
