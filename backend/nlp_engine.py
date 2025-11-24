@@ -7,13 +7,16 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 async def parse_expense(text: str):
     prompt = f"""
-    Analyze the following text: "{text}".
-    Extract: item_name, amount, currency.
+    Analyze text: "{text}".
+    Extract: item_name, amount, currency (default USD).
     Infer category from: [Food/Dining, Living/Utilities, Transport, Shopping, Entertainment, Health, Special Occasion, Subscription].
-    If it's a limit setting (e.g., "Limit 500"), set type to "set_limit".
-    If it's a subscription (e.g., "Add sub Netflix 15"), set type to "add_sub".
-    Return JSON only.
-    Example Output: {{"type": "expense", "item": "kfc", "amount": 30, "currency": "USD", "category": "Food/Dining"}}
+    
+    Rules:
+    1. If limit setting (e.g. "Limit 500", "Budget 200"), type="set_limit".
+    2. If subscription (e.g. "Add sub Netflix 15", "Sub Adobe 10"), type="add_sub".
+    3. Else type="expense".
+    
+    Output JSON only. Example: {{"type": "expense", "item": "kfc", "amount": 30, "currency": "USD", "category": "Food/Dining"}}
     """
     
     try:
