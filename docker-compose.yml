@@ -3,8 +3,9 @@ version: '3.8'
 services:
   backend:
     build: ./backend
+    image: chatbot-backend-image
     container_name: finance_backend
-    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
     volumes:
       - ./backend:/app
     env_file:
@@ -12,9 +13,11 @@ services:
     depends_on:
       - db
       - redis
+    restart: always
 
   worker:
     build: ./backend
+    image: chatbot-worker-image
     container_name: finance_worker
     command: celery -A worker.app worker --beat --loglevel=info
     env_file:
@@ -22,16 +25,19 @@ services:
     depends_on:
       - db
       - redis
+    restart: always
 
   db:
     image: mongo:6.0
     container_name: finance_mongo
     volumes:
       - mongo_data:/data/db
+    restart: always
 
   redis:
     image: redis:7
     container_name: finance_redis
+    restart: always
 
   caddy:
     image: caddy:2
